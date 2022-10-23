@@ -10,6 +10,7 @@
   <a href="#how-to-use">How To Use</a> •
   <a href="#license">License</a> •
   <a href="#author">Author</a>
+  (https://github.com/jpawlowski)
 </p>
 
 MTA-STS is a security standard to secure e-mail delivery. E-mail servers that send inbound e-mail to your domain will be able to detect that your e-mail server supports SMTP-over-TLS via `STARTTLS` (also known as [Opportunistic TLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) before opening the actual connection.
@@ -53,6 +54,21 @@ In case the sending e-mail server is not able to initiate a secure connection, i
    It is also quite painful to manually deal with the reports other e-mail providers will send to you. For that particular reason, you may want to consider sending these e-mails to a 3rd-party tool like [Report URI](https://report-uri.com/), [URIports](https://www.uriports.com/), or from other commercial providers.
    
    You probably want this to be the same tool you might use for DMARC reports, like [DMARC Analyzer](https://www.dmarcanalyzer.com/) or [Dmarcian](https://dmarcian.com/).
+
+## Crazy Domains Premium DNS example
+1. Follow steps 1. and 2. above. My project naming convention was subtly different being `mta-sts.<your_fully_qualified_domain_name>`
+
+2. The GitHub URL is of the form: `https://<user>.github.io/<projectname>`. 
+Thus a CNAME did not work.
+
+3. Create a Web Forward instead: `mta-sts.<your_fully_qualified_domain_name>` forwards to `<user>.github.io/<projectname>`. In the Premium DNS interface one only needs to enter `mta-sts` for the web forward name as the domain name is hard coded.
+Do not include https leading or trailing /.
+
+4. Within your project edit the file `.well-known/mta-sts.txt`, remove all comments etc. Initially set the mode to `testing`. Do not reduce `max_age` below 1 week. This is the recommended minimum time, once stable you could be pro active and increase this time. Switch mode to `enforce` once you are confident MTA-STS is working.
+
+5. I use Mailahrdener for my free email system monitoring service: (https://www.mailhardener.com/kb/mta-sts)
+My only issues with email result from HotMail (Microsoft Outlooks) reputation algorithms where I get hit from being within a larger pool of IP addresses or low volume mail.
+
 
 ## License
 
