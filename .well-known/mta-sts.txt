@@ -1,4 +1,4 @@
 version: STSv1
-mode: testing
+mode: enforce
 mx: sydneyv1.shawky.com.au
 max_age: 604800
