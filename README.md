@@ -55,14 +55,12 @@ In case the sending e-mail server is not able to initiate a secure connection, i
    
    You probably want this to be the same tool you might use for DMARC reports, like [DMARC Analyzer](https://www.dmarcanalyzer.com/) or [Dmarcian](https://dmarcian.com/).
 
-## Crazy Domains Premium DNS example
-1. Follow steps 1. and 2. above. My project naming convention was subtly different being `mta-sts.<your_fully_qualified_domain_name>`
+## Expanding Step 3.
+1. Follow steps 1. to 3 above. My project naming convention was subtly different being `mta-sts.<your_fully_qualified_domain_name>`. Before proceeding to step 4 above, it is important to get the Custom domain configured:
 
-2. The GitHub URL is of the form: `https://<user>.github.io/<projectname>`. 
-Thus a CNAME did not work.
+2. From `https://github.com/<user>/mta-sts.<your_fully_qualified_domain_name>` project navigate to Settings then Pages. Under Custom domain enter `mta-sts.<your_fully_qualified_domain_name>` as the custom domain name then press Save. Wait until the DNS check is successful. Investigate issues with your DNS service otherwise.
 
-3. Create a Web Forward instead: `mta-sts.<your_fully_qualified_domain_name>` forwards to `<user>.github.io/<projectname>`. In the Premium DNS interface one only needs to enter `mta-sts` for the web forward name as the domain name is hard coded.
-Do not include https leading or trailing /.
+3. Once the DNS test is successful Github will generate an SSL certificate for this URL. Once that is complete you may check the "Enforce HTTPS" box. Refresh the page and note that GitHub Pages now references the correct URL using HTTPS. Select "Visit site". This should show the mta-sts.txt file. Proceed to step 4 above once this is successful.
 
 4. Within your project edit the file `.well-known/mta-sts.txt`, remove all comments etc. Initially set the mode to `testing`. Do not reduce `max_age` below 1 week. This is the recommended minimum time, once stable you could be pro active and increase this time. Switch mode to `enforce` once you are confident MTA-STS is working.
 
