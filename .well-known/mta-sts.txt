@@ -1,5 +1,5 @@
 version: STSv1
 mode: enforce
 mx: sydneyv1.shawky.com.au
-mx: mail.shawky.net
+mx: mail.shawky.com.au
 max_age: 2419200
